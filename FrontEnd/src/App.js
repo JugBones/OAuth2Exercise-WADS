@@ -1,41 +1,21 @@
 import React, { useState, /*useEffect*/ } from 'react';
-import Header from "./components/Header";
-import Form from "./components/Form";
-import TodosList from './components/TodosList';
+import { Login } from './Login';
+import { Register } from './Register';
 import './App.css';
 
-const App = () => {
-  //const initialState = JSON.parse(localStorage.getItem("todos")) || []; ~this is for storing the value to local storage~
-  const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([/*initialState*/]);
-  const [editTodo, setEditTodo] = useState(null);
+function App(){
+  const [currentForm, setCurrentForm] = useState('login');
 
-  //useEffect(() =>{
-    //localStorage.setItem("todos", JSON.stringify(todos)); ~this is for storing the value to local storage~
-  //}, [todos]);
-
+  const toggleForm = (formName) => {
+    setCurrentForm(formName);
+  }
   return (
-    <div className='container'>
-      <div className='app-wrapper'>
-        <div>
-          <Header />
-        </div>
-        <div>
-          <Form 
-            input={input}
-            setInput={setInput}
-            todos={todos}
-            setTodos={setTodos}
-            editTodo={editTodo}
-            setEditTodo={setEditTodo}
-          />
-        </div>
-        <div>
-          <TodosList todos={todos} setTodos = {setTodos} setEditTodo={setEditTodo} />
-        </div>
-      </div>
+    <div className="App">
+      {
+        currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
+      }
     </div>
   );
-};
+}
 
 export default App;
