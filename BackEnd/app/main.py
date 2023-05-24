@@ -6,6 +6,10 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from databases import Database
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -13,6 +17,13 @@ SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
+# Set up database connection
+SQLALCHEMY_DATABASE_URL = "sqlite:///./database.db"  # Replace with your database URL
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base = declarative_base()
 
 fake_users_db = {
     "johndoe": {
@@ -86,6 +97,14 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
     return encoded_jwt
 
 
+async def get_db():
+    db = Database(SQLALCHEMY_DATABASE_URL)
+    await db.connect()
+    try:
+        yield db
+    finally:
+        await db.disconnect()
+
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -116,6 +135,16 @@ async def get_current_active_user(
 @app.get("/api/protected")
 async def protected_route(current_user: User = Depends(get_current_user)):
     return {"message": "Protected endpoint", "user": current_user.username}
+
+@app.get("/users/{user_id}")
+async def get_user(user_id: int, db: Database = Depends(get_db)):
+    # Perform database operations using the db connection
+    # For example:
+    query = "SELECT * FROM users WHERE id = :user_id"
+    values = {"user_id": user_id}
+    result = await db.fetch_one(query=query, values=values)
+    return result
+
 
 @app.post("/token", response_model=Token)
 async def login_for_access_token(
