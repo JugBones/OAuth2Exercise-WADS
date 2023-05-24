@@ -25,28 +25,31 @@ const Login = (props) => {
   };
 
   return (
-    <div className='auth-form-container'>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='email'>Email</label>
+    <div className = 'auth-form-container'>
+      <form onSubmit = {handleSubmit}>
+        <label htmlFor = 'email'>Email</label>
         <input
-          value={email}
-          type='email'
-          placeholder='E-mail'
-          id='email'
-          name='email'
-          onChange={(e) => setEmail(e.target.value)}
+          value = {email}
+          type = 'email'
+          placeholder = 'Email'
+          id = 'email'
+          name = 'email'
+          onChange = {(e) => setEmail(e.target.value)}
         />
-        <label htmlFor='password'>Password</label>
+
+        <label htmlFor = 'password'>Password</label>
         <input
-          value={password}
-          type='password'
-          placeholder='Password'
-          id='password'
-          name='password'
-          onChange={(e) => setPassword(e.target.value)}
+          value = {password}
+          type = 'password'
+          placeholder = 'Password'
+          id = 'password'
+          name = 'password'
+          onChange = {(e) => setPassword(e.target.value)}
         />
-        <button type='submit'>Log In</button>
+
+        <button type = 'submit'>Log In</button>
       </form>
+      
       <button onClick={() => props.onFormSwitch('register')}>
         Don't Have an Account yet? Register Here
       </button>

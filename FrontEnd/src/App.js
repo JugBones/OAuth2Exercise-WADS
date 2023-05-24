@@ -1,5 +1,5 @@
 import React, { useState, /*useEffect*/ } from 'react';
-import { Login } from './Login';
+import Login from './Login';
 import { Register } from './Register';
 import './App.css';
 
