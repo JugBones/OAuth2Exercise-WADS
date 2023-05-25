@@ -30,6 +30,3 @@ Jairo Nathanael Immanuel Siegers (2502042971)\
 Justin Theofilus Yonathan (2502036382)\
 Pandya Limawan (2502022433)\
 Rendy Gunawan (2502024666)
-
-## Live Link
-
