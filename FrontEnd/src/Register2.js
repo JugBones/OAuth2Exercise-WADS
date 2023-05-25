@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-
 import { UserContext } from './context/UserContext';
 
 export const Register2 = (props) => {
     const {email, setEmail} = useState('');
     const {password, setPassword} = useState('');
     const {name, setName} = useState('');
-    const [, setToken] = useContext(UserContext);
+    const [setToken] = UserContext(UserContext);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const submitRegistration = async () => {
         const requestOptions = {

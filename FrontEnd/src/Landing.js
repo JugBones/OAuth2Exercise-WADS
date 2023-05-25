@@ -18,7 +18,6 @@ export const Register = (props) => {
             <label htmlfor = "view">To view your full profile, click the button below</label>
             <button type = "submit">Profile</button>
             </form>
-        <button onClick={() => props.onFormSwitch('login')}>Already Have an Account? Log In Here.</button>
     </div>
     )
 }
