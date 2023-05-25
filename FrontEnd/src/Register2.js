@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
 import { UserContext } from './context/UserContext';
 
@@ -12,15 +12,15 @@ export const Register2 = (props) => {
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({email: email, hashed_password: password}),
+            body: JSON.stringify({email: email, hashed_password: password, full_name: name}),
 
         };
 
-        const response = await fetch("/api/users", requestOptions);
+        const response = await fetch("http://localhost:8000/api/users", requestOptions);
         const data = await response.json();
 
         if (!response.ok) {
-            setErrorMessage(data.detail);
+            //setErrorMessage(data.detail);
         } else {
             setToken(data.access_token);
         }
@@ -38,7 +38,7 @@ export const Register2 = (props) => {
             <input value = {email} type = "email" placeholder = "E-mail" id = "email" name = "email"></input>
             <label htmlfor = "password">password</label>
             <input value = {password} type = "password" placeholder = "Password" id = "password" name = "password"></input>
-            <button type = "submit">Log In</button>
+            <button type = "submit">Register</button>
             <label htmlfor = "name">Full Name</label>
             <input value = {name} name = "name" id = "name" placeholder = "Full Name"></input>
         </form>
