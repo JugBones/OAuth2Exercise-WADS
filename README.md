@@ -1,7 +1,7 @@
 # OAuth2Exercise-WADS
 
 Here is our attempt developing the [FrontEnd](https://github.com/JugBones/OAuth2Exercise-WADS/tree/main/FrontEnd) and 
-[BackEnd](https://github.com/JugBones/OAuth2Exercise-WADS/tree/main/BackEnd) of a simple login application using:\
+[BackEnd](https://github.com/JugBones/OAuth2Exercise-WADS/tree/main/BackEnd) of a simple login application using:
 
 `FrontEnd`
 - ReactJS
