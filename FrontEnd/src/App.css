@@ -21,24 +21,31 @@
     border: 1px solid white;
     border-radius: 10px;
     margin: 0.5rem;
+    /* background-color: red; */
   }
 }
 
 label {
   text-align: left;
-  padding: 20px;
+  /* padding: 20px; */
+  padding-top: 20px;
+  padding-bottom: 20px;
   margin-bottom: -10px;
   font-size: 20px;
   display: block;
+  /* background-color: green; */
 }
 
 input {
-  margin: 20px;
+  /* margin: 20px; */
+  margin-left: -1px;
+  margin-bottom: 30px;
   padding: 1rem;
+  padding-right: 2rem;
   border: none;
   border-radius: 10px;
-  width: 250px;
-  margin-bottom: 30px;
+  width: 260px;
+  /* background-color: purple; */
 }
 
 form {
@@ -53,7 +60,8 @@ button {
   cursor: pointer;
   color: #7439db;
   margin-bottom: 10px;
-  text-decoration: underline
+  text-decoration: underline;
+  margin-top: 10px;
 }
 
 .link-btn {
