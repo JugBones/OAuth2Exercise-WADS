@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 
 import { UserContext } from "./context/UserContext";
 
@@ -23,6 +23,7 @@ export const Login2 = (props) => {
       //setErrorMessage(data.detail);
     } else {
       setToken(data.access_token);
+      props.onFormSwitch('Landing');
     }
   };
 

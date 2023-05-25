@@ -14,14 +14,13 @@ export const Register = (props) => {
     <div className = 'auth-form-container'>
         <form onSubmit = {handleSubmit}>
             <label htmlfor = "email">Email</label>
-            <input value = {email} type = "email" placeholder = "E-mail" id = "email" name = "email"></input>
+            {/* <output value = {email} type = "email" placeholder = "E-mail" id = "email" name = "email"></output> */}
             <label htmlfor = "password">Password</label>
-            <input value = {pass} type = "password" placeholder = "Password" id = "password" name = "password"></input>
+            {/* <output value = {pass} type = "password" placeholder = "Password" id = "password" name = "password"></output> */}
             <label htmlfor = "name">Full Name</label>
-            <input value = {name} name = "name" id = "name" placeholder = "Full Name"></input>
-            <button type = "submit">Register</button>
+            {/* <output value = {name} name = "name" id = "name" placeholder = "Full Name"></output> */}
             </form>
-        <button onClick={() => props.onFormSwitch('login')}>Already Have an Account? Log In Here.</button>
+        <button onClick={() => props.onFormSwitch('back')}>Back</button>
     </div>
     )
 }
