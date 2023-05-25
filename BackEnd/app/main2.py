@@ -2,42 +2,80 @@ from typing import Dict
 import fastapi as _fastapi
 import fastapi.security as _security
 import sqlalchemy.orm as _orm
-import services as _services, schemas as _schemas, models as _models
+from fastapi.middleware.cors import CORSMiddleware
+
+import database as _database, models as _models, schemas as _schemas, services as _services
 
 _services.create_database()
 
+oauth2_scheme = _security.OAuth2PasswordBearer(tokenUrl="login")
+
 app = _fastapi.FastAPI()
 
-@app.post("/api/users")
-async def create_user(
-    user: _schemas.UserCreate, db: _orm.Session = _fastapi.Depends(_services.get_db)
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def index():
+    return{"Welcome to Backend":"Hello World!"}
+
+@app.get("/profile/{id}", response_model=_schemas.User)
+def profile(
+    id:int,
+    token: str = _fastapi.Depends(oauth2_scheme),
+    session: _orm.Session= _fastapi.Depends(_database.get_db)
 ):
-    db_user = await _services.get_user_by_email(user.email, db)
-    if db_user:
-        raise _fastapi.HTTPException(status_code=400, detail="Email already in use")
+    
+    return _services.get_user_by_id(session=session, id=id)
 
-    user = await _services.create_user(user, db)
-
-    return await _services.create_token(user)
-
-
-@app.post("/api/token")
-async def generate_token(
-    form_data: _security.OAuth2PasswordRequestForm = _fastapi.Depends(),
-    db: _orm.Session = _fastapi.Depends(_services.get_db),
+@app.post('/signup', response_model=_schemas.User)
+def signup(
+    payload: _schemas.UserCreate = _fastapi.Body(), 
+    session:_orm.Session=_fastapi.Depends(_database.get_db)
 ):
-    user = await _services.authenticate_user(form_data.username, form_data.password, db)
 
-    if not user:
-        raise _fastapi.HTTPException(status_code=401, detail="Invalid Credentials")
+    payload.hashed_password = _models.User.hash_password(payload.hashed_password)
+    return _services.create_user(session, user=payload)
 
-    return await _services.create_token(user)
+@app.post('/login', response_model=Dict)
+def login(
+        payload: _security.OAuth2PasswordRequestForm = _fastapi.Depends(),
+        session: _orm.Session = _fastapi.Depends(_database.get_db)
+    ):
 
+    try:
+        user:_models.User = _services.get_user(
+            session=session, email=payload.username
+        )
+    except:
+        raise _fastapi.HTTPException(
+            status_code=_fastapi.status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid user credentials"
+        )
 
-@app.get("/api/users/me", response_model=_schemas.User)
-async def get_user(user: _schemas.User = _fastapi.Depends(_services.get_current_user)):
-    return user
+    is_validated:bool = user.validate_password(payload.password)
+    if not is_validated:
+        raise _fastapi.HTTPException(
+            status_code=_fastapi.status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid user credentials"
+        )
 
-@app.get("/api")
-async def root():
-    return {"message": "test"}
+    return user.generate_token()
+
+@app.delete("/delete-user/{user_id}", response_model=_schemas.User)
+def delete_user(
+    id:int,
+    token: str = _fastapi.Depends(oauth2_scheme),
+    session: _orm.Session= _fastapi.Depends(_database.get_db)
+):
+    return _services.delete_user(session=session, id=id)

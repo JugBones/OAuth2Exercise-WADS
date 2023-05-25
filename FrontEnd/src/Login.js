@@ -1,40 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from "react-router";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = (props) => {
-  const [email, setEmail] = useState('');
+  // const navigate = useNavigate()
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const login = async (e) => {
+    e.preventDefault(); 
     try {
-      // Send login request to the backend
-      const response = await axios.post('/api/login', {
-        email,
-        password,
-      });
-
-      // Handle successful login
-      console.log(response.data);
+      const response = await axios.post(
+        'http://localhost:8000/login', { username, password },
+        { headers: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' } });
+      const token = response.data.access_token; 
+      localStorage.setItem('token', token);
+      // navigate('/landing'); // Redirect to the profile page after successful login
     } catch (error) {
-      // Handle login error
-      console.error(error);
+      console.error(error.response.data);
     }
-
-    console.log(email);
   };
 
   return (
     <div className = 'auth-form-container'>
-      <form onSubmit = {handleSubmit}>
+      <form onSubmit = {login}>
         <label htmlFor = 'email'>Email</label>
         <input
-          value = {email}
+          value = {username}
           type = 'email'
-          placeholder = 'Email'
+          placeholder = 'email'
           id = 'email'
           name = 'email'
-          onChange = {(e) => setEmail(e.target.value)}
+          onChange = {(e) => setUsername(e.target.value)}
         />
 
         <label htmlFor = 'password'>Password</label>
@@ -50,7 +48,7 @@ const Login = (props) => {
         <button type = 'submit'>Log In</button>
       </form>
       
-      <button onClick={() => props.onFormSwitch('register')}>
+      <button onClick={() => props.onFormSwitch('Register2')}>
         Don't Have an Account yet? Register Here
       </button>
     </div>

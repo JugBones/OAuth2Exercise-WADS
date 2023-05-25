@@ -1,50 +1,76 @@
-import React, {useState} from 'react';
-import { UserContext } from './context/UserContext';
+import React, { useState } from 'react';
+// import { useNavigate } from "react-router";
+// import { UserContext } from './context/UserContext';
+import ErrorMessage from "./ErrorMessage";
+import axios from 'axios';
 
 export const Register2 = (props) => {
-    const {email, setEmail} = useState('');
-    const {password, setPassword} = useState('');
-    const {name, setName} = useState('');
-    const [setToken] = UserContext(UserContext);
+    // const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [full_name, setFullName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const submitRegistration = async () => {
-        const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({email: email, hashed_password: password}),
-
-        };
-
-        const response = await fetch("/api/users", requestOptions);
-        const data = await response.json();
-
-        if (!response.ok) {
-            setErrorMessage(data.detail);
-        } else {
-            setToken(data.access_token);
+    const signup = async () => {
+        try {
+          const response = await axios.post(
+            'http://localhost:8000/signup',
+            { email, full_name, password }, // Include the "password" field in the request payload
+            { headers: { 'content-type': 'application/json' } }
+          );
+          const token = response.data.access_token; // Assuming the token field is "access_token"
+          localStorage.setItem('token', token);
+        //   navigate('/landing'); // Redirect to the profile page after successful
+    
+        } catch (error) {
+          if (error.response) {
+            console.error('Error response:', error.response.data);
+          } else if (error.request) {
+            console.error('No response received:', error.request);
+          } else {
+            console.error('Error:', error.message);
+          }
         }
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        submitRegistration();
+        if (password === confirmPassword && password.length > 5) {
+          signup();
+        } else {
+          setErrorMessage(
+            "Minimum password length is 5"
+          );
+        }
     };
-
+    
     return (
-        <div className = 'auth-form-container'>
-        <form onSubmit = {handleSubmit}>
-            <label htmlfor = "email">email</label>
-            <input value = {email} type = "email" placeholder = "E-mail" id = "email" name = "email"></input>
-            <label htmlfor = "password">password</label>
-            <input value = {password} type = "password" placeholder = "Password" id = "password" name = "password"></input>
-            <button type = "submit">Log In</button>
-            <label htmlfor = "name">Full Name</label>
-            <input value = {name} name = "name" id = "name" placeholder = "Full Name"></input>
-        </form>
-        <button onClick={() => props.onFormSwitch('login')}>Already Have an Account? Log In Here.</button>
-    </div>
-    )
+        <div className="auth-form-container">
+            <h2>Register</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="user-box">
+                    <input type="text" value={full_name} onChange={(e) => setFullName(e.target.value)} name="" required />
+                    <label>Full Name</label>
+                </div>
+                <div className="user-box">
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="" required />
+                    <label>Email</label>
+                </div>
+                <div className="user-box">
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="" required />
+                    <label>Password</label>
+                </div>
+                <div className="user-box">
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="" required />
+                    <label>Confirm Password</label>
+                </div>
+                <ErrorMessage message={errorMessage} />
+                <button variant="contained" type="submit">Register</button>
+            </form>
+            <button onClick={() => props.onFormSwitch('login')}>Already Have an Account? Log In Here.</button>
+        </div>
+    );
 };
 
 export default Register2;

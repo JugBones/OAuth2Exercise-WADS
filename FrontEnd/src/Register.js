@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import Register2 from './Register2';
 
 export const Register = (props) => {
     const {email, setEmail} = useState('');
