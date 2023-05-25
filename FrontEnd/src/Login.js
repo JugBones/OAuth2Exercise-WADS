@@ -9,7 +9,7 @@ const Login = (props) => {
     e.preventDefault();
     try {
       // Send login request to the backend
-      const response = await axios.post('http://localhost:8000/api/login', {
+      const response = await axios.post('/api/login', {
         email,
         password,
       });

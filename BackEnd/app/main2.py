@@ -10,7 +10,6 @@ _services.create_database()
 
 app = _fastapi.FastAPI()
 
-
 @app.post("/api/users")
 async def create_user(
     user: _schemas.UserCreate, db: _orm.Session = _fastapi.Depends(_services.get_db)
@@ -40,3 +39,7 @@ async def generate_token(
 @app.get("/api/users/me", response_model=_schemas.User)
 async def get_user(user: _schemas.User = _fastapi.Depends(_services.get_current_user)):
     return user
+
+@app.get("/api")
+async def root():
+    return {"message": "test"}

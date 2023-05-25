@@ -1,6 +1,6 @@
 import React, { useState, /*useEffect*/ } from 'react';
 import Login from './Login';
-import { Register } from './Register';
+import { Register2 } from './Register2';
 import './App.css';
 
 function App(){
@@ -12,10 +12,10 @@ function App(){
   return (
     <div className="App">
       {
-        currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
+        currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register2 onFormSwitch={toggleForm}/>
       }
     </div>
-  );
+  ); 
 }
 
 export default App;
