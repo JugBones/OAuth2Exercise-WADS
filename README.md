@@ -13,7 +13,7 @@ Here is our attempt developing the [FrontEnd](https://github.com/JugBones/OAuth2
 - Bcrypt
 - Datetime
 - FastAPI
-- Jose (JWT)
+- Jose
 - JWT
 - Passlib
 - Pydantic
