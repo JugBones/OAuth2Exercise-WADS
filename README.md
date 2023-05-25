@@ -22,6 +22,9 @@ Here is our attempt developing the [FrontEnd](https://github.com/JugBones/OAuth2
 - Typing
 - Uvicorn
 
+## Live Link
+
+
 ### L4BC
 
 Christopher Alexander Tjiandra (2502019230)\
