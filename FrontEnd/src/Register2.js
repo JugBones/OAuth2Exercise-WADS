@@ -50,20 +50,22 @@ export const Register2 = (props) => {
             <h2>Register</h2>
             <form onSubmit={handleSubmit}>
                 <div className="user-box">
-                    <input type="text" value={full_name} onChange={(e) => setFullName(e.target.value)} name="" required />
                     <label>Full Name</label>
+                    <input type="text" value={full_name} onChange={(e) => setFullName(e.target.value)} name="" required />
+                    
                 </div>
                 <div className="user-box">
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="" required />
                     <label>Email</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="" required />
                 </div>
                 <div className="user-box">
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="" required />
                     <label>Password</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="" required />
                 </div>
                 <div className="user-box">
-                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="" required />
                     <label>Confirm Password</label>
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} name="" required />
+                    
                 </div>
                 <ErrorMessage message={errorMessage} />
                 <button variant="contained" type="submit">Register</button>

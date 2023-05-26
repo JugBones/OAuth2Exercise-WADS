@@ -1,23 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
-export const Register = (props) => {
-    const {email, setEmail} = useState('');
-    const {pass, setPass} = useState('');
-    const {name, setName} = useState('');
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        console.log(email);
+import { UserContext } from './context/UserContext';
 
+export const Landing = (props) => {
+    const [token, setToken] = useContext(UserContext);
+    const handleLogout = (e) =>{
+        setToken(null);
+        props.onFormSwitch('Register');
     }
 
     return (
-    <div className = 'auth-form-container'>
-        <form onSubmit = {handleSubmit}>
-            <label htmlfor = "welcome">WELCOME</label>
-            <label htmlfor = "congrats">Congratulations you have managed to login or register to this website!</label>
-            <label htmlfor = "view">To view your full profile, click the button below</label>
-            <button type = "submit">Profile</button>
-            </form>
-    </div>
-    )
+        <div>
+        <h1 className="title">You Are Logged In!!</h1>
+        {token && (
+          <button className="button" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
+      </div>
+    );
 }
+
+export default Landing;
