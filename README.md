@@ -39,4 +39,5 @@ Here is our attempt developing the [FrontEnd](https://github.com/JugBones/OAuth2
 ![](https://img.shields.io/badge/Tools-GitHub-informational?style=flat&logo=GitHub&color=181717)
 ![](https://img.shields.io/badge/Tools-Visual-Studio?style=flat&logo=VisualStudioCode&color=0044F9)
 ![](https://img.shields.io/badge/Code-Python-informational?style=flat&logo=Python&color=FBFF00)
-![](https://img.shields.io/badge/Language-JS-informational?style=flat&logo=javascript&color=FBFF00)
+![](https://img.shields.io/badge/Language-JS-informational?style=flat&logo=javascript&color=yellow)
+![](https://img.shields.io/badge/Database-SQLite-informational?style=flat&logo=sqlite&color=blue)
