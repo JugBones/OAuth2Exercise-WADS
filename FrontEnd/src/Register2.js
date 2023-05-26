@@ -46,7 +46,7 @@ export const Register2 = (props) => {
         </form>
         <button onClick={() => props.onFormSwitch('login')}>Already Have an Account? Log In Here.</button>
     </div>
-    )
+    );
 };
 
 export default Register2;

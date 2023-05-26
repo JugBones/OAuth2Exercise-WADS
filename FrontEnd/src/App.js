@@ -45,7 +45,11 @@ function App(){
   return (
     <div className="App">
       {
-        currentForm === "login" ? <Login2 onFormSwitch={toggleForm}/> : <Register2 onFormSwitch={toggleForm}/>
+        currentForm === "login" ? (
+          <Login2 onFormSwitch={toggleForm} />
+        ) : (
+          <Register2 onFormSwitch={toggleForm} />
+        )
         // currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register2 onFormSwitch={toggleForm}/>
         // currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Landing onFormSwitch={toggleForm}/>
         // <BrowserRouter>
